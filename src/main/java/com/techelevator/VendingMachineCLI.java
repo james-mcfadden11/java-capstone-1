@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import com.techelevator.Machine;
 
@@ -10,6 +12,9 @@ public class VendingMachineCLI {
 		// Make some objects here!
 		Scanner keyboard = new Scanner(System.in);
 		Machine machine = new Machine();
+
+		machine.restock();
+
 		String menuOneInput;
 		int menuOneChoice;
 
