@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,11 +10,12 @@ public class Machine {
 
     private double currentBalance;
     private double changeDue;
-    private List<Item> inventory;
+    private List<Item> inventory = new ArrayList<>();
 
     public double addToBalance(int ammount) {
         this.currentBalance += ammount;
         return currentBalance;
+        // logic for validating bill size
     }
 
     public double deductFromBalance(double cost) {
@@ -23,8 +25,36 @@ public class Machine {
 
     public double change() {
         changeDue = currentBalance;
+        int quarters = 0;
+        int dimes = 0;
+        int nickels = 0;
+
+        while (changeDue >= 0.05) {
+            if (changeDue >= 0.25) {
+                quarters += 1;
+                changeDue -= 0.25;
+            } else if (changeDue >= 0.10) {
+                dimes += 1;
+                changeDue -= 0.10;
+            } else if (changeDue >= 0.05) {
+                nickels += 1;
+                changeDue -= 0.05;
+            }
+        }
+
+        this.currentBalance = 0;
+
+        System.out.println("Your change is " + quarters + " quarters, " + dimes + " dimes, and " + nickels + " nickels");
+
         return currentBalance = 0;
     }
+
+    public void printInventory() {
+        for (Item item : inventory) {
+            System.out.println(item.getLocation() + " " + item.getName() + " Price: " + item.getPrice() + " Quantity: " + item.getQuantity());
+        }
+    }
+
 
     public void addItemToInventory(Item item) {
         this.inventory.add(item);
@@ -43,6 +73,24 @@ public class Machine {
             }
         } catch (FileNotFoundException e) {
             System.out.println("File was not found!");
+        }
+    }
+
+    public void sellItem(String itemLocation) {
+        for (Item item : inventory) {
+            if (item.getLocation().equals(itemLocation)) {
+                if (item.getQuantity() == 0) {
+                    System.out.println("Sold out!");
+                    return;
+                }
+
+                if (this.currentBalance >= item.getPrice()) {
+                    this.deductFromBalance(item.getPrice());
+                    item.setQuantity(item.getQuantity() - 1);
+                } else {
+                    System.out.println("Please add more money for this item");
+                }
+            }
         }
     }
 

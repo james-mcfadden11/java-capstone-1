@@ -16,56 +16,60 @@ public class VendingMachineCLI {
 		machine.restock();
 
 		String menuOneInput;
-		int menuOneChoice;
+		int menuOneChoice = 0;
 
-		do {
-			System.out.println("(1) Display Vending Machine Items");
-			System.out.println("(2) Purchase");
-			System.out.println("(3) Exit");
-			System.out.println("Please select an option: ");
-			menuOneInput = keyboard.nextLine();
-			menuOneChoice = Integer.parseInt(menuOneInput);
+		while (menuOneChoice != 3) {
+			do {
+				System.out.println("(1) Display Vending Machine Items");
+				System.out.println("(2) Purchase");
+				System.out.println("(3) Exit");
+				System.out.println("Please select an option: ");
+				menuOneInput = keyboard.nextLine();
+				menuOneChoice = Integer.parseInt(menuOneInput);
 
-		} while (menuOneChoice < 1 || menuOneChoice > 3);
+			} while (menuOneChoice < 1 || menuOneChoice > 3);
 
-		switch (menuOneChoice) {
-			case 1:
-				// sout (vending machine list)
-				//machine.printInventory()
-			case 2:
-				// go to purchase menu
-				String menuTwoInput;
-				int menuTwoChoice;
-				do {
-					System.out.println("Feed Money");
-					System.out.println("Select Product");
-					System.out.println("Finish Transaction");
-					System.out.println("Current Money Provided: $" + machine.getCurrentBalance());
-					menuTwoInput = keyboard.nextLine();
-					menuTwoChoice = Integer.parseInt(menuTwoInput);
-				} while (menuTwoChoice < 1 || menuTwoChoice > 3);
+			switch (menuOneChoice) {
+				case 1:
+					machine.printInventory();
+					break;
+				case 2:
+					// go to purchase menu
+					String menuTwoInput;
+					int menuTwoChoice = 0;
+					while (menuTwoChoice != 3) {
+						do {
+							System.out.println("1 Feed Money");
+							System.out.println("2 Select Product");
+							System.out.println("3 Finish Transaction");
+							System.out.println("Current Money Provided: $" + machine.getCurrentBalance());
+							menuTwoInput = keyboard.nextLine();
+							menuTwoChoice = Integer.parseInt(menuTwoInput);
+						} while (menuTwoChoice < 1 || menuTwoChoice > 3);
 
-				switch (menuTwoChoice) {
-					case 1:
-						System.out.println("Please enter the amount you would like to add: ");
-						String userAddedFunds = keyboard.nextLine();
-						int addedFunds = Integer.parseInt(userAddedFunds);
-						machine.addToBalance(addedFunds);
-						// add to balance
-					case 2:
-						//display list, user input for selection
-						//machine.printInventory()
-						//user.makeSelection
-							// - machine.deductFromBalance
-							// - machine.deductFromProductInventory()
-					case 3:
-						// give change
-						//exit
-				}
-			case 3:
-				// System.exit
+						switch (menuTwoChoice) {
+							case 1:
+								System.out.println("Please enter the amount you would like to add: ");
+								String userAddedFunds = keyboard.nextLine();
+								int addedFunds = Integer.parseInt(userAddedFunds);
+								machine.addToBalance(addedFunds);
+								break;
+							case 2:
+								machine.printInventory();
+								System.out.println("Please enter the location of the product you would like to buy: ");
+								String itemLocation = keyboard.nextLine();
+								machine.sellItem(itemLocation);
+								break;
+							case 3:
+								machine.change();
+								break;
+						}
+					break;
+					}
+				case 3:
+					System.exit(0);
+					break;
+			}
 		}
-
-
 	}
 }

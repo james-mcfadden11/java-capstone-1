@@ -5,6 +5,7 @@ public class Item {
     private double price;
     private String location;
     private String type;
+    private int quantity;
     private String message;
 
     public Item(String name, double price, String location, String type) {
@@ -12,12 +13,34 @@ public class Item {
         this.price = price;
         this.location = location;
         this.type = type;
+        this.quantity = 5;
     }
 
-
-    public String getMessage(String type) {
-
+    public String getName() {
+        return name;
     }
 
+    public double getPrice() {
+        return price;
+    }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
