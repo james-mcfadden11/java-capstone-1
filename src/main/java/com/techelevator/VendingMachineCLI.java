@@ -64,9 +64,11 @@ public class VendingMachineCLI {
 								machine.change();
 								break;
 						}
-					break;
+
 					}
+					System.out.println("broke out of menu2 while loop");
 				case 3:
+					System.out.println("inside case 3 under menu1 while loop - exiting");
 					System.exit(0);
 					break;
 			}

@@ -13,9 +13,14 @@ public class Machine {
     private List<Item> inventory = new ArrayList<>();
 
     public double addToBalance(int ammount) {
-        this.currentBalance += ammount;
-        return currentBalance;
         // logic for validating bill size
+        if (ammount != 1 && ammount != 2 && ammount != 5 && ammount != 10 && ammount != 20 && ammount != 50 && ammount != 100) {
+            System.out.println("Invalid bill size!");
+            return -1;
+        } else {
+            this.currentBalance += ammount;
+            return currentBalance;
+        }
     }
 
     public double deductFromBalance(double cost) {
