@@ -40,7 +40,7 @@ public class VendingMachineCLI {
 						System.out.println("1 Feed Money");
 						System.out.println("2 Select Product");
 						System.out.println("3 Finish Transaction");
-						System.out.println("Current Money Provided: $" + machine.getCurrentBalance());
+						System.out.println("Current Money Provided: $" + String.format("%.2f", machine.getCurrentBalance()));
 						menuTwoInput = keyboard.nextLine();
 						menuTwoChoice = Integer.parseInt(menuTwoInput);
 					} while (menuTwoChoice < 1 || menuTwoChoice > 3);
