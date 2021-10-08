@@ -32,8 +32,20 @@ public class Item {
         return type;
     }
 
+    public void setMessage() {
+        if (this.type.equals("Chip")) {
+            this.message = "Crunch Crunch, Yum!";
+        } else if (this.type.equals("Candy")) {
+            this.message = "Munch Munch, Yum!";
+        } else if (this.type.equals("Drink")) {
+            this.message = "Glug Glug, Yum!";
+        } else if (this.type.equals("Gum")) {
+            this.message = "Chew Chew, Yum!";
+        }
+    }
+
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public int getQuantity() {
