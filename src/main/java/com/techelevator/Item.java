@@ -32,7 +32,8 @@ public class Item {
         return type;
     }
 
-    public void setMessage() {
+    // how to test?
+    public String setMessage() {
         if (this.type.equals("Chip")) {
             this.message = "Crunch Crunch, Yum!";
         } else if (this.type.equals("Candy")) {
@@ -44,6 +45,7 @@ public class Item {
         } else {
             this.message = "Item not found!";
         }
+        return this.message;
     }
 
     public String getMessage() {

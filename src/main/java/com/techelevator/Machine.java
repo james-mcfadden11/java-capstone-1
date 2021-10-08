@@ -2,21 +2,14 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.time.LocalDateTime;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-
 public class Machine {
-
     private double currentBalance;
     private String changeDue;
     private List<Item> inventory = new ArrayList<>();
@@ -118,37 +111,36 @@ public class Machine {
         }
     }
 
-    public void sellItem(String itemLocation) {
+    // return an Item for unit testing purposes?
+    public String sellItem(String itemLocation) {
         for (Item item : inventory) {
             if (item.getLocation().equals(itemLocation)) {
                 if (item.getQuantity() == 0) {
-                    System.out.println("Sold out!");
-                    return;
+                    return "Sold out!";
                 }
                 if (getCurrentBalance() >= item.getPrice()) {
-                    System.out.println("Dispensing item: " + item.getName());
-                    System.out.println("Item price: $" + String.format("%.2f", item.getPrice()));
-                    System.out.println("Money remaining: $" + String.format("%.2f", this.currentBalance));
+                    String outputString = "";
+                    outputString += "Dispensing item: " + item.getName() + "\n";
+                    outputString += "Item price: $" + String.format("%.2f", item.getPrice()) + "\n";
+                    outputString += "Money remaining: $" + getCurrentBalance() + "\n";
                     item.setMessage();
-                    System.out.println(item.getMessage());
+                    outputString += item.getMessage();
 
                     this.logTransaction(item);
                     this.deductFromBalance(item.getPrice());
                     item.setQuantity(item.getQuantity() - 1);
-                    return;
 
+                    return outputString;
                 } else {
-                    System.out.println("Please add more money for this item");
-                    return;
+                    return "Please add more money for this item";
                 }
             }
         }
-        System.out.println("Invalid product code! Please try again.");
-        return;
+        return "Invalid product code! Please try again.";
     }
 
     public double getCurrentBalance() {
-        this.currentBalance = (double)Math.round(currentBalance * 100) / 100;
+        this.currentBalance = (double)Math.round(currentBalance * 100.0) / 100.0;
         return currentBalance;
     }
 
