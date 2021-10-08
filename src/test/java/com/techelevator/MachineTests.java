@@ -1,34 +1,36 @@
 package com.techelevator;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.crypto.Mac;
 
 public class MachineTests {
-    public static void main(String[] args) {
+    private Item testItem;
+    private Machine testMachine;
 
+    @Before
+    public void setup() {
+        testItem = new Item("pop", 0.75, "B5", "Drink");
+        testMachine = new Machine();
     }
 
-    Item testItem = new Item("pop", 0.75, "B5", "Drink");
-
-@Test
+    @Test
     public void add_unlisted_amount_of_money() {
     // Arrange
-    Machine testMachine = new Machine();
+
     // Act
     double actual = testMachine.addToBalance(-3);
     double expected = -1.0;
 
     // Assert
     Assert.assertEquals(expected, actual, 2);
+    }
 
-}
-
-@Test
+    @Test
     public void deduct_from_balance() {
     // Arrange
-    Machine testMachine = new Machine();
     testMachine.addToBalance(50);
 
     // Act
@@ -37,12 +39,11 @@ public class MachineTests {
 
     // Assert
     Assert.assertEquals(expected, actual, 2);
-}
+    }
 
-@Test
+    @Test
     public void test_for_change() {
     // Arrange
-    Machine testMachine = new Machine();
     testMachine.addToBalance(5);
     testMachine.deductFromBalance(2.45);
 
@@ -52,12 +53,10 @@ public class MachineTests {
 
     // Assert
     Assert.assertEquals(expected, actual);
+    }
 
-}
-
-@Test
+    @Test
     public void deduct_price_from_balance() {
-    Machine testMachine = new Machine();
     testMachine.addToBalance(5);
 
     // Act
@@ -66,12 +65,17 @@ public class MachineTests {
 
     // Assert
     Assert.assertEquals(expected, actual, 2);
-}
+    }
 
+    // sell item test cases:
+    // invalid input or doesn't exist in inventory
+    // need more money
+    // sold out
+    // normal purchase
+    @Test
+    public void sellItem_updates_balance_accordingly() {
 
-
-
-
+    }
 
 
 }

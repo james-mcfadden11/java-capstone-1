@@ -1,18 +1,12 @@
 package com.techelevator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
-import com.techelevator.Machine;
 
-// Vending Machine Command Line Interface application
 public class VendingMachineCLI {
-
 	public static void main(String[] args) {
 		// Make some objects here!
 		Scanner keyboard = new Scanner(System.in);
 		Machine machine = new Machine();
-
 		machine.restock();
 
 		String menuOneInput;
@@ -32,15 +26,14 @@ public class VendingMachineCLI {
 			if (menuOneChoice == 1) {
 				machine.printInventory();
 			} else if (menuOneChoice == 2) {
-				// go to purchase menu
 				String menuTwoInput;
 				int menuTwoChoice = 0;
 				while (menuTwoChoice != 3) {
 					do {
-						System.out.println("1 Feed Money");
-						System.out.println("2 Select Product");
-						System.out.println("3 Finish Transaction");
-						System.out.println("Current Money Provided: $" + String.format("%.2f", machine.getCurrentBalance()));
+						System.out.println("(1) Feed Money");
+						System.out.println("(2) Select Product");
+						System.out.println("(3) Finish Transaction");
+						System.out.println("Current Money Provided: $" + machine.getCurrentBalance());
 						menuTwoInput = keyboard.nextLine();
 						menuTwoChoice = Integer.parseInt(menuTwoInput);
 					} while (menuTwoChoice < 1 || menuTwoChoice > 3);
@@ -54,13 +47,17 @@ public class VendingMachineCLI {
 						machine.printInventory();
 						System.out.println("Please enter the location of the product you would like to buy: ");
 						String itemLocation = keyboard.nextLine();
-						machine.sellItem(itemLocation);
+						System.out.println(machine.sellItem(itemLocation));
 					} else if (menuTwoChoice == 3) {
 						System.out.println(machine.change());
+					} else {
+						System.out.println("Invalid selection - please choose again.");
 					}
 				}
 			} else if (menuOneChoice == 3) {
 				System.exit(0);
+			} else {
+				System.out.println("Invalid selection - please choose again.");
 			}
 		}
 	}
