@@ -18,7 +18,7 @@ import java.util.Date;
 public class Machine {
 
     private double currentBalance;
-    private double changeDue;
+    private String changeDue;
     private List<Item> inventory = new ArrayList<>();
     private File file = new File("Log.txt");
     private PrintWriter printWriter;
@@ -60,33 +60,32 @@ public class Machine {
     }
 
     public double deductFromBalance(double cost) {
-        this.currentBalance -= cost;
+        this.currentBalance = getCurrentBalance() - cost;
         return currentBalance;
     }
 
-    public double change() {
-        changeDue = currentBalance;
+    public String change() {
         int quarters = 0;
         int dimes = 0;
         int nickels = 0;
 
-        this.logTransaction(changeDue, "change");
-
-        while (changeDue >= 0.05) {
-            if (changeDue >= 0.25) {
+        this.logTransaction(getCurrentBalance(), "change");
+        String change = "";
+        while (getCurrentBalance() >= 0.05) {
+            if (getCurrentBalance() >= 0.25) {
                 quarters += 1;
-                changeDue -= 0.25;
-            } else if (changeDue >= 0.10) {
+                currentBalance -= 0.25;
+            } else if (getCurrentBalance() >= 0.10) {
                 dimes += 1;
-                changeDue -= 0.10;
-            } else if (changeDue >= 0.05) {
+                currentBalance -= 0.10;
+            } else if (getCurrentBalance() >= 0.05) {
                 nickels += 1;
-                changeDue -= 0.05;
+                currentBalance -= 0.05;
             }
         }
         this.currentBalance = 0;
-        System.out.println("Your change is " + quarters + " quarters, " + dimes + " dimes, and " + nickels + " nickels");
-        return currentBalance;
+        change = "Your change is " + quarters + " quarters, " + dimes + " dimes, and " + nickels + " nickels";
+        return change;
     }
 
     public void printInventory() {
@@ -126,7 +125,7 @@ public class Machine {
                     System.out.println("Sold out!");
                     return;
                 }
-                if (this.currentBalance >= item.getPrice()) {
+                if (getCurrentBalance() >= item.getPrice()) {
                     System.out.println("Dispensing item: " + item.getName());
                     System.out.println("Item price: $" + String.format("%.2f", item.getPrice()));
                     System.out.println("Money remaining: $" + String.format("%.2f", this.currentBalance));
@@ -149,6 +148,7 @@ public class Machine {
     }
 
     public double getCurrentBalance() {
+        this.currentBalance = (double)Math.round(currentBalance * 100) / 100;
         return currentBalance;
     }
 

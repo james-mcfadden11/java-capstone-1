@@ -56,7 +56,7 @@ public class VendingMachineCLI {
 						String itemLocation = keyboard.nextLine();
 						machine.sellItem(itemLocation);
 					} else if (menuTwoChoice == 3) {
-						machine.change();
+						System.out.println(machine.change());
 					}
 				}
 			} else if (menuOneChoice == 3) {
