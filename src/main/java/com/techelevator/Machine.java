@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,30 +32,29 @@ public class Machine {
     }
 
     public void logTransaction(double transactionAmount, String transactionType) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
         Date date = new Date();
         if (transactionType.equals("deposit")) {
-            printWriter.println(formatter.format(date) + " FEED MONEY: $" + (currentBalance - transactionAmount) + " $" + currentBalance);
+            printWriter.println(formatter.format(date) + " FEED MONEY: $" + String.format("%.2f", (currentBalance - transactionAmount)) + " $" + String.format("%.2f", currentBalance));
         } else if (transactionType.equals("change")) {
-            printWriter.println(formatter.format(date) + " GIVE CHANGE: $" + currentBalance + " $0.00");
+            printWriter.println(formatter.format(date) + " GIVE CHANGE: $" + String.format("%.2f", currentBalance) + " $0.00");
             printWriter.close();
         }
     }
 
     public void logTransaction(Item item) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
         Date date = new Date();
-        printWriter.println(formatter.format(date) + " " + item.getName() + " " + item.getLocation() + " $" + currentBalance + " $" + (currentBalance - item.getPrice()));
+        printWriter.println(formatter.format(date) + " " + item.getName() + " " + item.getLocation() + " $" + String.format("%.2f", currentBalance) + " $" + String.format("%.2f", (currentBalance - item.getPrice())));
     }
 
-
-    public double addToBalance(int ammount) {
-        if (ammount != 1 && ammount != 2 && ammount != 5 && ammount != 10 && ammount != 20 && ammount != 50 && ammount != 100) {
+    public double addToBalance(int amount) {
+        if (amount != 1 && amount != 2 && amount != 5 && amount != 10 && amount != 20 && amount != 50 && amount != 100) {
             System.out.println("Invalid bill size!");
-            return -1;
+            return -1.0;
         } else {
-            this.currentBalance += ammount;
-            this.logTransaction(ammount, "deposit");
+            this.currentBalance += amount;
+            this.logTransaction(amount, "deposit");
             return currentBalance;
         }
     }
@@ -84,21 +84,20 @@ public class Machine {
                 changeDue -= 0.05;
             }
         }
-
         this.currentBalance = 0;
-
-
         System.out.println("Your change is " + quarters + " quarters, " + dimes + " dimes, and " + nickels + " nickels");
-
-        return currentBalance = 0;
+        return currentBalance;
     }
 
     public void printInventory() {
         for (Item item : inventory) {
-            System.out.println(item.getLocation() + " " + item.getName() + " Price: " + item.getPrice() + " Quantity: " + item.getQuantity());
+            if (item.getQuantity() != 0) {
+                System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + item.getPrice() + " Quantity: " + item.getQuantity());
+            } else {
+                System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + item.getPrice() + " Quantity: SOLD OUT");
+            }
         }
     }
-
 
     public void addItemToInventory(Item item) {
         this.inventory.add(item);
@@ -127,68 +126,30 @@ public class Machine {
                     System.out.println("Sold out!");
                     return;
                 }
-
                 if (this.currentBalance >= item.getPrice()) {
+                    System.out.println("Dispensing item: " + item.getName());
+                    System.out.println("Item price: $" + String.format("%.2f", item.getPrice()));
+                    System.out.println("Money remaining: $" + String.format("%.2f", this.currentBalance));
+                    item.setMessage();
+                    System.out.println(item.getMessage());
+
                     this.logTransaction(item);
                     this.deductFromBalance(item.getPrice());
                     item.setQuantity(item.getQuantity() - 1);
-                    item.setMessage();
-                    System.out.println(item.getMessage());
+                    return;
+
                 } else {
                     System.out.println("Please add more money for this item");
+                    return;
                 }
             }
         }
+        System.out.println("Invalid product code! Please try again.");
+        return;
     }
 
     public double getCurrentBalance() {
         return currentBalance;
     }
 
-    /*
-    display items
-    - current items
-        - qty on hand
-        - location
-        - name
-        - price
-        - type
-
-    purchase >>
-    - add money *
-    - select product
-    - finish transaction
-    - balance on hand *
-
-    feed money
-    - add to balance (int only) *
-
-    select product
-    - list items (similar to display items)
-    - enter code for product
-        - sold out message
-        - dispense message
-            - item name
-            - cost
-            - remaining balance
-            - product specific message
-        - update balance
-
-     finish transaction
-     - give change (only in coins)
-     - return to main menu
-
-     exit
-     - exit the program
-
-
-     log
-     - write all transactions to a txt file
-        - time stamp
-        - action taken / product bought
-        - money added or deducted
-        - balance
-
-
-     */
 }

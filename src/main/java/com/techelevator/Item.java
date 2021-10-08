@@ -41,6 +41,8 @@ public class Item {
             this.message = "Glug Glug, Yum!";
         } else if (this.type.equals("Gum")) {
             this.message = "Chew Chew, Yum!";
+        } else {
+            this.message = "Item not found!";
         }
     }
 
