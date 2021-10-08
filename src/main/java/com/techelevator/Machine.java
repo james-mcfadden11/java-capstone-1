@@ -11,7 +11,6 @@ import java.util.Date;
 
 public class Machine {
     private double currentBalance;
-    private String changeDue;
     private List<Item> inventory = new ArrayList<>();
     private File file = new File("Log.txt");
     private PrintWriter printWriter;
