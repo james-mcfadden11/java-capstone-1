@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Machine {
-    private double currentBalance;
+    private double currentBalance = 0.00;
     private List<Item> inventory = new ArrayList<>();
     private File file = new File("Log.txt");
     private PrintWriter printWriter;
@@ -83,9 +83,9 @@ public class Machine {
     public void printInventory() {
         for (Item item : inventory) {
             if (item.getQuantity() != 0) {
-                System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + item.getPrice() + " Quantity: " + item.getQuantity());
+                System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + String.format("%.2f", item.getPrice()) + " Quantity: " + item.getQuantity());
             } else {
-                System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + item.getPrice() + " Quantity: SOLD OUT");
+                System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + String.format("%.2f", item.getPrice()) + " Quantity: SOLD OUT");
             }
         }
     }
