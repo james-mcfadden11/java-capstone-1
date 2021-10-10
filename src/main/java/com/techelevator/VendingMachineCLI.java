@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class VendingMachineCLI {
 	public static void main(String[] args) {
-		// Make some objects here!
 		Scanner keyboard = new Scanner(System.in);
 		Machine machine = new Machine();
 		machine.restock();
@@ -18,8 +17,13 @@ public class VendingMachineCLI {
 				System.out.println("(2) Purchase");
 				System.out.println("(3) Exit");
 				System.out.println("Please select an option: ");
-				menuOneInput = keyboard.nextLine();
-				menuOneChoice = Integer.parseInt(menuOneInput);
+
+				try {
+					menuOneInput = keyboard.nextLine();
+					menuOneChoice = Integer.parseInt(menuOneInput);
+				} catch (NumberFormatException e) {
+					System.out.println("Please enter a digit 1-3.");
+				}
 
 			} while (menuOneChoice < 1 || menuOneChoice > 3);
 
@@ -34,8 +38,14 @@ public class VendingMachineCLI {
 						System.out.println("(2) Select Product");
 						System.out.println("(3) Finish Transaction");
 						System.out.println("Current Money Provided: $" + String.format("%.2f", machine.getCurrentBalance()));
-						menuTwoInput = keyboard.nextLine();
-						menuTwoChoice = Integer.parseInt(menuTwoInput);
+
+						try {
+							menuTwoInput = keyboard.nextLine();
+							menuTwoChoice = Integer.parseInt(menuTwoInput);
+						} catch (NumberFormatException e) {
+							System.out.println("Please enter a digit 1-3.");
+						}
+
 					} while (menuTwoChoice < 1 || menuTwoChoice > 3);
 
 					if (menuTwoChoice == 1) {
