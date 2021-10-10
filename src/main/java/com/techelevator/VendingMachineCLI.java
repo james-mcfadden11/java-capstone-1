@@ -50,9 +50,13 @@ public class VendingMachineCLI {
 
 					if (menuTwoChoice == 1) {
 						System.out.println("Please enter the amount you would like to add: ");
-						String userAddedFunds = keyboard.nextLine();
-						int addedFunds = Integer.parseInt(userAddedFunds);
-						machine.addToBalance(addedFunds);
+						try {
+							String userAddedFunds = keyboard.nextLine();
+							int addedFunds = Integer.parseInt(userAddedFunds);
+							machine.addToBalance(addedFunds);
+						} catch (NumberFormatException e){
+							System.out.println("Please enter a dollar amount of $1, 2$, $5, $10, $20, $50, or $100");
+						}
 					} else if (menuTwoChoice == 2) {
 						machine.printInventory();
 						System.out.println("Please enter the location of the product you would like to buy: ");
