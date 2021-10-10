@@ -76,7 +76,7 @@ public class Machine {
             }
         }
         this.currentBalance = 0;
-        change = "Your change is " + quarters + " quarters, " + dimes + " dimes, and " + nickels + " nickels";
+        change = "Your change is " + quarters + " quarter(s), " + dimes + " dime(s), and " + nickels + " nickel(s)";
         return change;
     }
 
@@ -88,6 +88,7 @@ public class Machine {
                 System.out.println(item.getLocation() + " " + item.getName() + " Price: $" + String.format("%.2f", item.getPrice()) + " Quantity: SOLD OUT");
             }
         }
+        System.out.println();
     }
 
     public void addItemToInventory(Item item) {
@@ -110,7 +111,6 @@ public class Machine {
         }
     }
 
-    // return an Item for unit testing purposes?
     public String sellItem(String itemLocation) {
         for (Item item : inventory) {
             if (item.getLocation().equals(itemLocation)) {
@@ -121,7 +121,7 @@ public class Machine {
                     String outputString = "";
                     outputString += "Dispensing item: " + item.getName() + "\n";
                     outputString += "Item price: $" + String.format("%.2f", item.getPrice()) + "\n";
-                    outputString += "Money remaining: $" + getCurrentBalance() + "\n";
+                    outputString += "Current money provided: $" + String.format("%.2f", this.getCurrentBalance()) + "\n";
                     item.setMessage();
                     outputString += item.getMessage();
 
